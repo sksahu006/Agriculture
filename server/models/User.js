@@ -1,52 +1,17 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-const userSchema=new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-      lastName: {
-        type: String,
-        // required: true,
-        trim: true,
-      },
-      email: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-      phoneNumber: {
-        type: String,
-        required: true,
-      },
-      password: {
-        type: String,
-        required: true,
-      },
-      userType: {
-        type: String,
-        enum: ["SuperAdmin", "Admin", "Staff", "AssociatePartner"],
-        required: true,
-      },
-      isDeleted: {
-        type: Boolean,
-        default: false,
-      },
-      gender: {
-        type: String,
-        required: true,
-        enum: ["male", "female", "other"],
-      },
-      dateOfBirth: {
-        type: String,
-        // required: true,
-      },
-      profilePic: {
-        type: String,
-        // required: true,
-      },
-})
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  user_type: { type: String, enum: ["farmer", "retailer", "end_user"], required: true }, // farmer, retailer, end_user
+  profile_pic: String,
+  location: String,
+  farming_practices: String, // relevant only for farmers
+  contact_info: String,
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+});
 
 const User = mongoose.model("User", userSchema);
 
