@@ -5,7 +5,7 @@ import {
   RectangleStackIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Invoice } from "@/pages/dashboard";
-import { SignIn} from "@/pages/auth";
+import { SignIn, SignUp} from "@/pages/auth";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -38,6 +38,12 @@ export const routes = [
         name: "sign in",
         path: "/sign-in",
         element: <SignIn />,
+      },
+      {
+        icon: <ServerStackIcon {...icon} />,
+        name: "sign up",
+        path: "/sign-up",
+        element: <SignUp />,
       },
     ],
   },

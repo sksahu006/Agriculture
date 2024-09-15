@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaShoppingBag, FaSearch, FaBars, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaShoppingBag, FaSearch, FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa';
 import logoAg from '../../assets/logoAg.png';
 
-export function DashboardNavbar () {
+export function DashboardNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Simulated authentication state (replace with real authentication logic)
+  const isLoggedIn = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/auth/sign-in");
+    }
+  }, [isLoggedIn, navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Clear the token on logout
+    navigate("/auth/sign-in");
+  };
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -53,7 +68,7 @@ export function DashboardNavbar () {
                 <FaShoppingBag className="h-6 w-6" />
               </button>
               {isCartOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="origin-top-right absolute z-10 right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="px-4 py-2">
                     <p className="text-sm font-medium text-gray-900">Shopping Cart</p>
                   </div>
@@ -77,6 +92,12 @@ export function DashboardNavbar () {
                 </div>
               )}
             </div>
+            <button
+              onClick={handleLogout}
+              className="p-1 ml-3 rounded-full text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <FaSignOutAlt className="h-6 w-6" />
+            </button>
           </div>
           <div className="-mr-2 flex items-center sm:hidden">
             <button
@@ -111,7 +132,5 @@ export function DashboardNavbar () {
     </nav>
   );
 };
-
-DashboardNavbar.displayName = "/src/widgets/layout/dashboard-navbar.jsx";
 
 export default DashboardNavbar;

@@ -16,10 +16,11 @@ export function Auth() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log("checked")
         const token = localStorage.getItem("authToken");
         if (!token) {
-          navigate("/auth/sign-in");
+          if (!location.pathname.startsWith("/auth")) {
+            navigate("/auth/sign-in");
+          }
         } else {
           navigate("/dashboard");
         }
